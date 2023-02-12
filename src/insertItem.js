@@ -1,12 +1,12 @@
 "use strict"
 
 const AWS = require("aws-sdk");
-const {v4} = require("uuid");
+// const {v4} = require("uuid");
 
 const insertItem = async(event) => {
     const {item} = JSON.parse(event.body);
     const createdAt = new Date().toISOString();
-    const id = v4(); //AWS.util.uuid.v4();
+    const id = AWS.util.uuid.v4();
 
     const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
@@ -26,7 +26,8 @@ const insertItem = async(event) => {
                 TableName: "ItemTableNew",
                 Item:  newItem
             }
-        );
+        ).promise();
+        
         statusCode = 200;
         data = JSON.stringify(newItem);
     } catch (err) {
@@ -41,5 +42,5 @@ const insertItem = async(event) => {
 }
 
 module.exports = {
-    handle: insertItem
+    handler: insertItem
 }
