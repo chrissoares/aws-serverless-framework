@@ -1,0 +1,6 @@
+Comandos para serem executados no diretório do projeto.
+
+serverless deploy    Deploy changes
+serverless info      View deployed endpoints and resources
+serverless invoke    Invoke deployed functions
+serverless --help    Discover more commands
