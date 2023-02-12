@@ -20,37 +20,37 @@ provider:
 
 functions:
   api:
-    handler: src/index.handler
+    handler: src/item/index.handler
     events:
       - http:
           path: /
           method: get
   insertItem:
-    handler: src/insertItem.handler
+    handler: src/item/insertItem.handler
     events:
       - http:
           path: /item
           method: post
   fetchItems:
-    handler: src/fetchItems.handler
+    handler: src/item/fetchItems.handler
     events:
       - http:
           path: /items
           method: get
   fetchItem:
-    handler: src/fetchItem.handler
+    handler: src/item/fetchItem.handler
     events:
       - http:
           path: /item/{id}
           method: get
   updateItem:
-    handler: src/updateItem.handler
+    handler: src/item/updateItem.handler
     events:
       - http:
           path: /item/{id}
           method: put
   removeItem:
-    handler: src/removeItem.handler
+    handler: src/item/removeItem.handler
     events:
       - http:
           path: /item/{id}
@@ -69,3 +69,15 @@ resources:
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+    Tasks:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Tasks
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+          
