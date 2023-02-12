@@ -1,31 +1,24 @@
 "use strict"
 const AWS = require("aws-sdk");
 
-const updateItem = async (event) => {
+const removeItem = async (event) => {
     const dynamoDB = new AWS.DynamoDB.DocumentClient();
     const {id} = event.pathParameters;
-    const {itemStatus} = JSON.parse(event.body);
-
 
     let data;
     let statusCode = 0;
 
     const params = {
         TableName: "ItemTableNew",
-        Key: {id},
-        UpdateExpression: 'set itemStatus = :itemStatus',
-        ExpressionAttributeValues: {
-            ':itemStatus': itemStatus
-        },
-        ReturnValues: "ALL_NEW"
+        Key: {id}
     }
 
     try {
-        await dynamoDB.update(params).promise();
+        await dynamoDB.delete(params).promise();
 
         statusCode = 200;
         data = JSON.stringify({
-            msg: 'Item updated.'
+            msg: 'Item deleted.'
         });
     } catch (err) {
         data = err;
@@ -39,5 +32,5 @@ const updateItem = async (event) => {
 }
 
 module.exports = {
-    handler: updateItem
+    handler: removeItem
 }

@@ -7,8 +7,6 @@ const fetchItems = async (event) => {
     let data;
     let statusCode = 0;
 
-    let items;
-
     try{
         const results = await dynamoDB.scan(
             {
@@ -16,10 +14,7 @@ const fetchItems = async (event) => {
             }
         ).promise();
 
-        // items = results.Items;
-
         statusCode = 200;
-        // data = JSON.stringify(items);
         data = JSON.stringify(results.Items);
     } catch (err) {
         data = err;
