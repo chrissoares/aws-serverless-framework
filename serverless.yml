@@ -17,6 +17,7 @@ provider:
             - dynamodb:DeleteItem
           Resource:
             - arn:aws:dynamodb:sa-east-1:875132407844:table/ItemTableNew
+            - arn:aws:dynamodb:sa-east-1:875132407844:table/Tasks
 
 functions:
   api:
@@ -54,6 +55,37 @@ functions:
     events:
       - http:
           path: /item/{id}
+          method: delete
+  # Task
+  insertTaks:
+    handler: src/task/insertTask.handler
+    events:
+      - http:
+          path: /task
+          method: post
+  getAllTask:
+    handler: src/task/getAllTask.handler
+    events:
+      - http:
+          path: /task
+          method: get
+  getTask:
+    handler: src/task/getTask.handler
+    events:
+      - http:
+          path: /task/{id}
+          method: get
+  updateTask:
+    handler: src/task/updateTask.handler
+    events:
+      - http:
+          path: /task/{id}
+          method: put
+  removeTask:
+    handler: src/task/removeTask.handler
+    events:
+      - http:
+          path: /task/{id}
           method: delete
 
 resources:
